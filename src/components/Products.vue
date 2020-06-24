@@ -34,23 +34,17 @@
 </template>
 
 <script>
-import db from '@/Library/DB'
 export default {
-  data () {
-    return {
-      products: {}
+    computed: {
+        products() {
+            this.$store.dispatch('getProducts')
+          return this.$store.state.products
+        }
+    },
+    created() {
+        console.log('here');
+        
     }
-  },
-  created () {
-    db.getProducts()
-    .then((products) => {
-      let tempProducts = {}
-      products.forEach(product => {
-        tempProducts[product.id] = product.data()
-      })
-      this.products = tempProducts
-    })
-  }
 }
 </script>
 

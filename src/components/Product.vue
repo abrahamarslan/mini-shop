@@ -46,16 +46,17 @@
 </template>
 
 <script>
-import db from '@/Library/DB'
 export default {
   data () {
     return {
-      product: {},
       quantity: 1,
       pickedSize: 0
     }
   },
   computed: {
+    product() {
+        return this.$store.getters.getProduct(this.$route.params.id)
+    },
     total () {
       if (this.product.sizes === undefined) return 0
       return this.product.sizes[this.pickedSize].price * this.quantity
@@ -65,12 +66,6 @@ export default {
     addToCart () {
     }
   },
-  created () {
-    db.getProduct(this.$route.params.id)
-    .then(product => {
-      this.product = product.data()
-    })
-  }
 }
 </script>
 

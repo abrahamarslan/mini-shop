@@ -7,13 +7,14 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bulma/css/bulma.css'
+import store from '@/store/index.js'
+
 
 library.add(faUserSecret)
 Vue.component('fa-icon', FontAwesomeIcon)
 Vue.filter('price', price => Intl.NumberFormat('en-IN', { style: 'currency', currency: 'EUR' }).format(price))
 
 Vue.config.productionTip = false
-
 /**
  * Custom code for Firebase Application
  */
@@ -21,7 +22,8 @@ let baseApp
 FirebaseApp.auth().onAuthStateChanged(() => {
   if(!baseApp) {
     baseApp = new Vue({
-      router,
+      store,
+      router,      
       render: h => h(App)
     }).$mount('#app')
     
